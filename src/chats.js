@@ -4123,9 +4123,10 @@ define("xabber-chats", function () {
                 return;
             }
             let deferred_all = new $.Deferred();
-            deferred_all.done((data) => {
+            deferred_all.done((data) => { 
                 this.model.messages.create({
                     from_jid: this.account.get('jid'),
+                    is_sender: true,
                     type: 'file_upload',
                     files: data,
                     encrypted: this.model.get('encrypted'),
@@ -4402,6 +4403,7 @@ define("xabber-chats", function () {
             });
             audio.load(file_url);
             audio.setVolume(0.5);
+            //audio.setPlaybackRate(1.1);
             return audio;
         },
 

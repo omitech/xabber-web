@@ -328,6 +328,7 @@ var constants = {
 
     languages: {
         "en": "English",
+        /*
         "": "Montenegrin (Latin)", // ????????
         "ar-SA": "العربية",
         "az-AZ": "Azərbaycanca",
@@ -403,6 +404,7 @@ var constants = {
         "zh-CN": "简体中文",
         "zh-TW": "中國傳統的",
         "zu-ZA": "isiZulu"
+        */
     },
 
     languages_another_locales: {

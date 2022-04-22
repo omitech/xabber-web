@@ -2481,7 +2481,32 @@ define("xabber-accounts", function () {
                     xabber.body.setScreen('login', {'login_screen': 'xabber'});
                 else
                     window.location.href = constants.XABBER_ACCOUNT_URL + '/social/login/' + provider + '/?origin=' + origin + '&source=Xabber Web';
-            }
+            },
+            
+            nwOAuth: function () {
+                let request = {
+                        type: 'GET',
+                        url: constants.API_SERVICE_URL + '/xmpp_auth/',
+                        success: this.nwOAuthSuccess.bind(this)
+                    };
+                $.ajax(request);
+            },
+            
+            nwOAuthSuccess: function (data) {
+               this.authFeedback({});
+                    
+               this.account = xabber.accounts.create({
+                    websocket_connection_url: constants.CONNECTION_URL,
+                    jid: data.jid,
+                    password: data.token,
+                    auth_type: 'oauth',
+                    is_new: true
+                }, {auth_view: this});
+               
+                this.account.settings.save('omemo', data.omemo);
+               
+                this.account.trigger('start');
+            },
         });
 
         xabber.XmppLoginPanel = xabber.AuthView.extend({
@@ -2492,6 +2517,7 @@ define("xabber-accounts", function () {
                 "click .login-type": "changeLoginType",
                 "click .btn-log-in": "submit",
                 "click .btn-social": "socialAuth",
+                "click .btn-log-nw": "nwOAuth",
                 "click .btn-cancel": "cancel",
                 "keyup input[name=password]": "keyUp"
             },
@@ -2499,7 +2525,7 @@ define("xabber-accounts", function () {
             changeLoginType: function () {
                 xabber.body.setScreen('login', {'login_screen': 'xabber'});
             },
-
+            
             updateButtons: function () {
                 let authentication = this.data.get('authentication');
                 this.$('.btn-log-in').switchClass('disabled', authentication);

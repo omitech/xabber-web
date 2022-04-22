@@ -1,5 +1,5 @@
-<div class="chat-message {[if (encrypted) {]}encrypted{[}]} file-upload noselect" {[if (avatar_id) {]} data-avatar="{{avatar_id}}" {[}]} data-time="{{timestamp}}" data-from="{{from_jid}}" data-uniqueid="{{unique_id}}">
-    <div class="left-side noselect">
+<div class="chat-message {[if (encrypted) {]}encrypted{[}]} file-upload noselect" {[ if (is_sender) { ]}data-isSender="true"{[}]} {[if (avatar_id) {]} data-avatar="{{avatar_id}}" {[}]} data-time="{{timestamp}}" data-from="{{from_jid}}" data-uniqueid="{{unique_id}}">
+    <div class="left-side noselect hidden">
         <div class="circle-avatar"></div>
     </div>
 

@@ -6189,8 +6189,21 @@ input[type=text].simple-input-field:hover {
 }
 
 .chat-message .msg-wrap {
-    width: 100%;
-    padding: 0 112px 0 64px;
+    width: 80%;
+    padding: 8px 112px 8px 14px;
+    
+}
+
+.chat-message[data-isSender="true"] .msg-wrap {
+    margin-left: 19%;
+    margin-right: 1%;
+    background-color: #dcf8c6;
+    border-radius: 6px 0 0 6px;
+}
+
+
+.chat-message[data-isSender="true"] .chat-msg-author-wrap {
+    display: none !important;
 }
 
 .forwarded .msg-wrap {

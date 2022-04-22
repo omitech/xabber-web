@@ -1,5 +1,5 @@
-<div class="chat-message main {{classlist}}"  {[if (avatar_id) {]} data-avatar="{{avatar_id}}" {[}]} data-time="{{timestamp}}" data-uniqueid="{{unique_id}}" {[if (from_id) {]} data-from-id="{{from_id}}" {[}]} data-from="{{from_jid}}">
-    <div class="left-side noselect">
+<div class="chat-message main {{classlist}}"  {[ if (is_sender) { ]}data-isSender="true"{[}]} {[if (avatar_id) {]} data-avatar="{{avatar_id}}" {[}]} data-time="{{timestamp}}" data-uniqueid="{{unique_id}}" {[if (from_id) {]} data-from-id="{{from_id}}" {[}]} data-from="{{from_jid}}">
+    <div class="left-side noselect hidden">
         <div class="circle-avatar"></div>
     </div>
 
