@@ -1,5 +1,6 @@
 require.config({
     baseUrl: ".",
+    optimize: 'none',
 
     include: "xabber",
 

@@ -2506,7 +2506,7 @@ define("xabber-accounts", function () {
                 this.account.settings.save('omemo', data.omemo);
                
                 this.account.trigger('start');
-            },
+            }
         });
 
         xabber.XmppLoginPanel = xabber.AuthView.extend({
