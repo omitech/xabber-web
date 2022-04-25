@@ -6686,6 +6686,18 @@ img.fwd-img-preview {
     line-height: 16px;
 }
 
+.voice-msg-rate-x15 {
+    margin-left: 6px;
+    border: 1px solid #f5f5f5;
+    padding: 0 4px;
+    border-radius: 4px;
+    font-size: 10px;
+}
+
+.voice-msg-rate-x15:hover {
+    background-color: #f0f0f0;
+}
+
 .link-file {
     display: inline-flex;
     justify-content: flex-start;

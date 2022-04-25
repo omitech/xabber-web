@@ -3345,13 +3345,19 @@ define("xabber-chats", function () {
                 $msg_element = $elem.closest('.link-file');
             $elem.addClass('voice-message-rendering').html($(templates.messages.audio_file_waveform({waveform_id: unique_id})));
             let aud = this.createAudio(file_url, unique_id);
-
+            
+            aud.setVolume(0.5);
+            aud.setPlaybackRate(xabber._cache.get('audio_playback_rate') || 1);
+            
             aud.on('ready', () => {
-                let duration = Math.round(aud.getDuration());
-                $elem.find('.voice-msg-total-time').text(utils.pretty_duration(duration));
                 aud.play();
             });
 
+            aud.on('waveform-ready', () => {
+                let duration = Math.round(aud.getDuration());
+                $elem.find('.voice-msg-total-time').text(utils.pretty_duration(duration));
+            });
+              
             aud.on('error', () => {
                 $elem.removeClass('voice-message-rendering');
                 element.innerHTML = not_expanded_msg;
@@ -3373,6 +3379,12 @@ define("xabber-chats", function () {
 
             aud.on('finish', () => {
                 $msg_element.removeClass('playing');
+              
+                // auto playback next
+                let $next_msg = $elem.parents('.chat-message[data-uniqueid]').next();
+                if ($next_msg.length > 0 && $next_msg.find('.voice-message-play').length) {
+                  $next_msg.find('.voice-message-play').trigger('click');
+                }
             });
 
             aud.on('pause', () => {
@@ -3381,6 +3393,18 @@ define("xabber-chats", function () {
 
             this.$('.voice-message-volume')[0].onchange = () => {
                 aud.setVolume(this.$('.voice-message-volume').val()/100);
+            };
+            
+            this.$('.voice-msg-rate-x15')[0].onclick = (ev) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+                
+                // toggle playback rate
+                let playbackRate = (aud.getPlaybackRate() > 1) ? 1 : 1.5;
+                xabber._cache.save('audio_playback_rate', playbackRate);
+                
+                aud.setPlaybackRate(playbackRate);
+                if (!aud.isPlaying()) aud.play();
             };
             return aud;
         },
@@ -4390,6 +4414,7 @@ define("xabber-chats", function () {
 
         createAudio: function(file_url, unique_id) {
             let audio = WaveSurfer.create({
+                backend: 'MediaElement',
                 container: "#" + unique_id,
                 scrollParent: false,
                 barWidth: 3,
@@ -4402,8 +4427,6 @@ define("xabber-chats", function () {
                 progressColor: '#757575'
             });
             audio.load(file_url);
-            audio.setVolume(0.5);
-            //audio.setPlaybackRate(1.1);
             return audio;
         },
 

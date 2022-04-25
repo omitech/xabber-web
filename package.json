@@ -42,6 +42,7 @@
     "strophejs-plugins": "0.0.7",
     "underscore": "~1.8.3",
     "unzip": "^0.1.11",
-    "wavesurfer": ">0.0.0"
+    "wavesurfer": ">0.0.0",
+    "wavesurfer.js": "^6.1.0"
   }
 }

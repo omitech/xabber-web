@@ -19,7 +19,7 @@ require.config({
         "strophe.ping":             "node_modules/strophejs-plugins/ping/strophe.ping",
         "strophe.rsm":              "node_modules/strophejs-plugins/rsm/strophe.rsm",
         "text":                     "node_modules/requirejs-text/text",
-        "wavesurfer":               "node_modules/wavesurfer/dist/wavesurfer",
+        "WaveSurfer":               "node_modules/wavesurfer.js/dist/wavesurfer.min",
         "slug":                     "node_modules/slug/slug",
         "sha256":                   "node_modules/js-sha256/src/sha256",
         "magnific-popup":           "node_modules/magnific-popup/dist/jquery.magnific-popup",
