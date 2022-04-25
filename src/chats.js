@@ -3343,10 +3343,10 @@ define("xabber-chats", function () {
                 unique_id = 'waveform' + moment.now(),
                 $elem = $(element),
                 $msg_element = $elem.closest('.link-file');
-            $elem.addClass('voice-message-rendering').html($(templates.messages.audio_file_waveform({waveform_id: unique_id})));
+            $elem.addClass('voice-message-rendering').html($(templates.messages.audio_file_waveform({waveform_id: unique_id, volume: xabber._cache.get('audio_playback_volume')*100 || 50})));
             let aud = this.createAudio(file_url, unique_id);
             
-            aud.setVolume(0.5);
+            aud.setVolume(xabber._cache.get('audio_playback_volume') || 0.5);
             aud.setPlaybackRate(xabber._cache.get('audio_playback_rate') || 1);
             
             aud.on('ready', () => {
@@ -3392,7 +3392,9 @@ define("xabber-chats", function () {
             });
 
             this.$('.voice-message-volume')[0].onchange = () => {
-                aud.setVolume(this.$('.voice-message-volume').val()/100);
+                let audioVolume = Number(this.$('.voice-message-volume').val()/100).toFixed(1);
+                xabber._cache.save('audio_playback_volume', audioVolume);
+                aud.setVolume(audioVolume);
             };
             
             this.$('.voice-msg-rate-x15')[0].onclick = (ev) => {

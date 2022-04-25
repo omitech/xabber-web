@@ -36693,7 +36693,7 @@ define('text!templates/chats/messages/file.html',[],function () { return '<div c
 define('text!templates/chats/messages/audio_file.html',[],function () { return '<div class="one-file-wrap link-file">\n    <i class="mdi mdi-play no-uploaded"></i>\n    <i class="mdi mdi-pause"></i>\n    <div class="file-container">\n        <div class="file-info one-line">\n            <span class="file-name">{{name}}</span>{[ if (duration) { ]}, {{duration}}{[ } ]},  <span class="file-size">{{size}}</span>\n        </div>\n        <a href="{{sources[0]}}" class="file-link-download">{[print(xabber.getString("action_download"))]}</a>\n        <a class="voice-message-play">Play</a>\n    </div>\n</div>';});
 
 
-define('text!templates/chats/messages/audio_file_waveform.html',[],function () { return '<div class="waveform" id="{{waveform_id}}"></div>\n<div class="audio-control-panel">\n    <span class="voice-msg-current-time">0:00</span> /\n    <span class="voice-msg-total-time">0:00</span>\n    <span href="#" class="voice-msg-rate-x15">x1.5</span>\n    <input value="50" type="range" class="voice-message-volume">\n</div>';});
+define('text!templates/chats/messages/audio_file_waveform.html',[],function () { return '<div class="waveform" id="{{waveform_id}}"></div>\n<div class="audio-control-panel">\n    <span class="voice-msg-current-time">0:00</span> /\n    <span class="voice-msg-total-time">0:00</span>\n    <span href="#" class="voice-msg-rate-x15">x1.5</span>\n    <input value="{{volume}}" type="range" class="voice-message-volume">\n</div>';});
 
 
 define('text!templates/chats/messages/auth_request.html',[],function () { return '<div class="chat-message system auth-request" data-time="{{timestamp}}" data-uniqueid="{{unique_id}}" data-from="{{from_jid}}">\n    <div class="left-side noselect">\n        <div class="circle-avatar"><img></div>\n    </div>\n\n    <div class="msg-wrap">\n        <div class="chat-msg-author-wrap">\n            <div class="chat-msg-author text-color-700 one-line">{{username}}</div>\n        </div>\n        <div class="chat-msg-content chat-text-content">{{message}}<span class="accept-request">Accept</span><span class="decline-request">Decline</span><span class="block-request">Block</span></div>\n    </div>\n\n    <div class="right-side noselect">\n        <div class="msg-time selectable-text" title="{{time}}">{{short_time}}</div>\n    </div>\n</div>\n';});
@@ -55669,10 +55669,10 @@ define("xabber-chats", [],function () {
                 unique_id = 'waveform' + moment.now(),
                 $elem = $(element),
                 $msg_element = $elem.closest('.link-file');
-            $elem.addClass('voice-message-rendering').html($(templates.messages.audio_file_waveform({waveform_id: unique_id})));
+            $elem.addClass('voice-message-rendering').html($(templates.messages.audio_file_waveform({waveform_id: unique_id, volume: xabber._cache.get('audio_playback_volume')*100 || 50})));
             let aud = this.createAudio(file_url, unique_id);
             
-            aud.setVolume(0.5);
+            aud.setVolume(xabber._cache.get('audio_playback_volume') || 0.5);
             aud.setPlaybackRate(xabber._cache.get('audio_playback_rate') || 1);
             
             aud.on('ready', () => {
@@ -55718,7 +55718,9 @@ define("xabber-chats", [],function () {
             });
 
             this.$('.voice-message-volume')[0].onchange = () => {
-                aud.setVolume(this.$('.voice-message-volume').val()/100);
+                let audioVolume = Number(this.$('.voice-message-volume').val()/100).toFixed(1);
+                xabber._cache.save('audio_playback_volume', audioVolume);
+                aud.setVolume(audioVolume);
             };
             
             this.$('.voice-msg-rate-x15')[0].onclick = (ev) => {
