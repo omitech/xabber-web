@@ -203,7 +203,7 @@ define("xabber-views", function () {
         },
 
         isScrolledToBottom: function () {
-            let scrollTop = this.ps_container[0].scrollTop,
+            let scrollTop = Math.round(this.ps_container[0].scrollTop),
                 scrollHeight = this.ps_container[0].scrollHeight,
                 offsetHeight = this.ps_container[0].offsetHeight;
             return scrollHeight === scrollTop + offsetHeight;

@@ -39083,7 +39083,7 @@ define('text!templates/chats/messages/file.html',[],function () { return '<div c
 define('text!templates/chats/messages/audio_file.html',[],function () { return '<div class="one-file-wrap link-file">\n    <i class="mdi mdi-play no-uploaded"></i>\n    <i class="mdi mdi-pause"></i>\n    <div class="file-container">\n        <div class="file-info one-line">\n            <span class="file-name">{{name}}</span>{[ if (duration) { ]}, {{duration}}{[ } ]},  <span class="file-size">{{size}}</span>\n        </div>\n        <a href="{{sources[0]}}" class="file-link-download">{[print(xabber.getString("action_download"))]}</a>\n        <a class="voice-message-play">Play</a>\n    </div>\n</div>';});
 
 
-define('text!templates/chats/messages/audio_file_waveform.html',[],function () { return '<div class="waveform" id="{{waveform_id}}"></div>\n<div class="audio-control-panel">\n    <span class="voice-msg-current-time">0:00</span> /\n    <span class="voice-msg-total-time">0:00</span>\n    <input value="50" type="range" class="voice-message-volume">\n</div>';});
+define('text!templates/chats/messages/audio_file_waveform.html',[],function () { return '<div class="waveform" id="{{waveform_id}}"></div>\n<div class="audio-control-panel">\n    <span class="voice-msg-current-time">0:00</span> /\n    <span class="voice-msg-total-time">0:00</span>\n    <!-- <a href="#" class="voice-msg-rate-x15">x1.5</a> -->\n    <input value="50" type="range" class="voice-message-volume">\n</div>';});
 
 
 define('text!templates/chats/messages/auth_request.html',[],function () { return '<div class="chat-message system auth-request" data-time="{{timestamp}}" data-uniqueid="{{unique_id}}" data-from="{{from_jid}}">\n    <div class="left-side noselect">\n        <div class="circle-avatar"><img></div>\n    </div>\n\n    <div class="msg-wrap">\n        <div class="chat-msg-author-wrap">\n            <div class="chat-msg-author text-color-700 one-line">{{username}}</div>\n        </div>\n        <div class="chat-msg-content chat-text-content">{{message}}<span class="accept-request">Accept</span><span class="decline-request">Decline</span><span class="block-request">Block</span></div>\n    </div>\n\n    <div class="right-side noselect">\n        <div class="msg-time selectable-text" title="{{time}}">{{short_time}}</div>\n    </div>\n</div>\n';});
@@ -41567,7 +41567,7 @@ define("xabber-views", [],function () {
         },
 
         isScrolledToBottom: function () {
-            let scrollTop = this.ps_container[0].scrollTop,
+            let scrollTop = Math.round(this.ps_container[0].scrollTop),
                 scrollHeight = this.ps_container[0].scrollHeight,
                 offsetHeight = this.ps_container[0].offsetHeight;
             return scrollHeight === scrollTop + offsetHeight;
@@ -58098,6 +58098,13 @@ define("xabber-chats", [],function () {
             this.$('.voice-message-volume')[0].onchange = () => {
                 aud.setVolume(this.$('.voice-message-volume').val()/100);
             };
+            /*
+            this.$('.voice-msg-rate-x15')[0].onclick = (ev) => {
+                aud.setPlaybackRate(1.5);
+                ev.preventDefault();
+                ev.stopPropagation();
+            };
+            */
             return aud;
         },
 
@@ -59106,6 +59113,7 @@ define("xabber-chats", [],function () {
 
         createAudio: function(file_url, unique_id) {
             let audio = WaveSurfer.create({
+                //backend: 'MediaElement',
                 container: "#" + unique_id,
                 scrollParent: false,
                 barWidth: 3,
@@ -59119,7 +59127,7 @@ define("xabber-chats", [],function () {
             });
             audio.load(file_url);
             audio.setVolume(0.5);
-            //audio.setPlaybackRate(1.1);
+            //audio.setPlaybackRate(1.5);
             return audio;
         },
 
