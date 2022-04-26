@@ -2368,6 +2368,9 @@ define("xabber-chats", function () {
             this.ps_container.on("ps-scroll-y", this.onScrollY.bind(this));
             this.model.on("change:active", this.onChangedActiveStatus, this);
             this.model.on("load_last_history", this.loadLastHistory, this);
+            
+            this.model.on("reload_history", this.reloadHistory, this);
+            
             this.model.on("get_missed_history", this.requestMissedMessages, this);
             this.model.messages.on("add", this.onMessage, this);
             this.model.messages.on("change:state", this.onChangedMessageState, this);
@@ -2799,6 +2802,10 @@ define("xabber-chats", function () {
                 query.max = xabber.settings.mam_messages_limit_start;
             }
             this.getMessageArchive(query, {last_history: true});
+        },
+        
+        reloadHistory: function() {
+          this.getMessageArchive({before: '', max: xabber.settings.mam_messages_limit}, {last_history: true});          
         },
 
         loadPreviousHistory: function () {
@@ -6796,9 +6803,10 @@ define("xabber-chats", function () {
             "click .btn-call-attention": "callAttention",
             "click .btn-search-messages": "renderSearchPanel",
             "click .btn-jingle-message": "sendJingleMessage",
-            "click .btn-set-status": "setStatus"
+            "click .btn-set-status": "setStatus",
+            "click .btn-chat-reload": "reloadChat"
         },
-
+        
         _initialize: function (options) {
             this.content = options.content;
             this.contact = this.content.contact;
@@ -7086,6 +7094,18 @@ define("xabber-chats", function () {
             }
         },
 
+        
+        reloadChat: function() {
+          
+          this.model.set({'last_archive_id': undefined, 'first_archive_id': undefined});
+          this.model.set('history_loaded', false);         
+          let all_messages = this.model.messages.models;
+                          $(all_messages).each((idx, item) => {
+                              this.content.removeMessage(item);
+                          });
+          this.model.trigger('reload_history', moment.now()); 
+        },
+        
         deleteContact: function () {
             this.contact.deleteWithDialog();
         },
