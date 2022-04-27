@@ -6973,8 +6973,13 @@ define("xabber-chats", function () {
                 is_archived = archived ? true : false;
             this.contact.set('archived', archived);
             !this.model.messages.length && this.model.item_view.updateLastMessage();
-            this.$('.btn-archive-chat .mdi').switchClass('mdi-package-up', is_archived);
-            this.$('.btn-archive-chat .mdi').switchClass('mdi-package-down', !is_archived);
+            //this.$('.btn-archive-chat .mdi').switchClass('mdi-package-up', is_archived);
+            //this.$('.btn-archive-chat .mdi').switchClass('mdi-package-down', !is_archived);
+            if (is_archived) {
+              this.$('.btn-archive-chat > span').text(xabber.getString("unarchive_chat"))
+            } else {
+               this.$('.btn-archive-chat > span').text(xabber.getString("archive_chat"))
+            }
             this.account.chat_settings.updateArchiveChatsList(this.contact.get('jid'), archived);
         },
 
@@ -7020,8 +7025,13 @@ define("xabber-chats", function () {
             let archived = this.contact.get('archived'),
                 is_archived = archived ? true : false;
             this.contact.set('archived', archived);
-            this.$('.btn-archive-chat .mdi').switchClass('mdi-package-up', is_archived);
-            this.$('.btn-archive-chat .mdi').switchClass('mdi-package-down', !is_archived);
+            //this.$('.btn-archive-chat .mdi').switchClass('mdi-package-up', is_archived);
+            //this.$('.btn-archive-chat .mdi').switchClass('mdi-package-down', !is_archived);
+            if (is_archived) {
+              this.$('.btn-archive-chat > span').text(xabber.getString("unarchive_chat"))
+            } else {
+               this.$('.btn-archive-chat > span').text(xabber.getString("archive_chat"))
+            }
         },
 
         updateGroupChatHead: function () {
