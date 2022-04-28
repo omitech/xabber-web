@@ -8020,14 +8020,21 @@ define("xabber-chats", function () {
                         this.view.sendChatState('paused');
                         end_time = moment.now();
                         if (mic_hover && ((end_time - start_time)/1000 >= 1.5)) {
-                            let audio_name = ("voice message " + moment().format('YYYY-MM-DD HH:mm:ss') + '.ogg'), audio_type = 'audio/ogg; codecs=opus',
+                            let audio_name = ("voice message " + moment().format('YYYY-MM-DD HH:mm:ss') + '.ogg'),
+                                audio_type = 'audio/ogg; codecs=opus',
                                 blob = new Blob(chunks, { 'type' : audio_type}),
-                                file = new File([blob], audio_name, {
-                                    type: audio_type,
+                                duration = (end_time - start_time);
+                            
+                            //https://stackoverflow.com/questions/63640361/how-to-add-duration-to-metadata-of-files-recorder-by-mediarecorder
+                            ysFixWebmDuration(blob, duration, {logger: false})
+                                .then((fixedBlob) => {
+                                    let file = new File([fixedBlob], audio_name, {
+                                            type: audio_type,
+                                        });
+                                    file.voice = true;
+                                    file.duration = Math.round(duration/1000);
+                                    this.view.addFileMessage([file]);
                                 });
-                            file.voice = true;
-                            file.duration = Math.round((end_time - start_time)/1000);
-                            this.view.addFileMessage([file]);
                         }
                         chunks = [];
                     };
