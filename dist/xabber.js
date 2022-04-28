@@ -59861,7 +59861,7 @@ define("xabber-chats", [],function () {
                 if (!this.quill.getText().trim().length) {
                     if (++this.click_counter === 3) {
                         this.click_counter = 0;
-                        this.setOneLiner();
+                        //this.setOneLiner();
                     }
                 }
             }
