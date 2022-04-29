@@ -7962,7 +7962,7 @@ define("xabber-chats", function () {
                         $mic.removeClass('recording ground-color-50');
                         return;
                     }
-                    let mediaRecorder = new MediaRecorder(stream),
+                    let mediaRecorder = new MediaRecorder(stream, {audioBitsPerSecond: 16000}),
                         timer = 1, start_time, end_time,
                         mic_hover = true;
                         mediaRecorder.onstart = () => {
@@ -8026,8 +8026,8 @@ define("xabber-chats", function () {
                                 duration = (end_time - start_time);
                             
                             //https://stackoverflow.com/questions/63640361/how-to-add-duration-to-metadata-of-files-recorder-by-mediarecorder
-                            ysFixWebmDuration(blob, duration, {logger: false})
-                                .then((fixedBlob) => {
+                            //https://stackoverflow.com/questions/50586612/seeking-is-not-working-in-recorded-video-with-mediarecorder-api
+                            this.fixBlobMetadata(blob, (fixedBlob) => {
                                     let file = new File([fixedBlob], audio_name, {
                                             type: audio_type,
                                         });
@@ -8054,6 +8054,35 @@ define("xabber-chats", function () {
             }
         },
 
+        fixBlobMetadata: function (inputBlob, callback) {
+            if (typeof EBML === 'undefined') {
+                return callback(inputBlob);
+            }
+            
+            // does not work properly with Firefox codec
+            if (utils.getBrowser() == 'Firefox') return callback(inputBlob); 
+            
+            var reader = new EBML.Reader();
+            var decoder = new EBML.Decoder();
+            var tools = EBML.tools;
+            var fileReader = new FileReader();
+            fileReader.onload = function(e) {
+                var ebmlElms = decoder.decode(this.result);
+                ebmlElms.forEach(function(element) {
+                    reader.read(element);
+                });
+                reader.stop();
+                var refinedMetadataBuf = tools.makeMetadataSeekable(reader.metadatas, reader.duration, reader.cues);
+                var body = this.result.slice(reader.metadataSize);
+                var newBlob = new Blob([refinedMetadataBuf, body], {
+                    type: inputBlob.type
+                });
+                callback(newBlob);
+            };
+            fileReader.readAsArrayBuffer(inputBlob);
+        },
+        
+        
         typeEmoticon: function (emoji) {
             if (typeof emoji == 'number')
                 emoji = Number(emoji).toString();

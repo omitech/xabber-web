@@ -24,7 +24,6 @@ require.config({
         "sha256":                   "node_modules/js-sha256/src/sha256",
         "magnific-popup":           "node_modules/magnific-popup/dist/jquery.magnific-popup",
         "i18next":                  "node_modules/i18next/i18next.min",
-        "fixWebmDuration":          "node_modules/fix-webm-duration/fix-webm-duration",
         
         // modified libs and plugins
         "backbone.localsync":       "src/lib/backbone.localsync",

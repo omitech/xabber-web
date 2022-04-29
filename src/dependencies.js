@@ -5,7 +5,6 @@ define([
     "jquery",
     "moment",
     "WaveSurfer",
-    "fixWebmDuration",
     "slug",
     "sha256",
     "magnific-popup",
@@ -23,7 +22,7 @@ define([
     "materialize",
     "qrcode",
     "perfectScrollbarJQuery"
-], function(Backbone, _, $, moment, wavesurfer, fixWebmDuration, slug, sha256, magnificPopup, i18next, i18next_sprintf, Strophe) {
+], function(Backbone, _, $, moment, wavesurfer, slug, sha256, magnificPopup, i18next, i18next_sprintf, Strophe) {
     return _.extend({
         $: $,
         _: _,
