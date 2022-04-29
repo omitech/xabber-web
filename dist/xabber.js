@@ -35521,7 +35521,6 @@ define('xabber-dependencies',[
         _: _,
         moment: moment,
         WaveSurfer: wavesurfer,
-        ysFixWebmDuration: fixWebmDuration,
         slug: slug,
         xabber_i18next: i18next,
         xabber_i18next_sprintf: i18next_sprintf,
@@ -60353,17 +60352,6 @@ define("xabber-chats", [],function () {
                                 duration = (end_time - start_time);
                             
                             //https://stackoverflow.com/questions/63640361/how-to-add-duration-to-metadata-of-files-recorder-by-mediarecorder
-                            /*
-                            ysFixWebmDuration(blob, duration, {logger: false})
-                                .then((fixedBlob) => {
-                                    let file = new File([fixedBlob], audio_name, {
-                                            type: audio_type,
-                                        });
-                                    file.voice = true;
-                                    file.duration = Math.round(duration/1000);
-                                    this.view.addFileMessage([file]);
-                                });
-                                */
                             //https://stackoverflow.com/questions/50586612/seeking-is-not-working-in-recorded-video-with-mediarecorder-api
                             this.fixBlobMetadata(blob, (fixedBlob) => {
                                     let file = new File([fixedBlob], audio_name, {

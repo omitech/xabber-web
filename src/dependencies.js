@@ -28,7 +28,6 @@ define([
         _: _,
         moment: moment,
         WaveSurfer: wavesurfer,
-        ysFixWebmDuration: fixWebmDuration,
         slug: slug,
         xabber_i18next: i18next,
         xabber_i18next_sprintf: i18next_sprintf,
