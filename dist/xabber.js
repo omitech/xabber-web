@@ -35713,7 +35713,7 @@ var constants = {
         pop: 'sounds/pop.ogg',
         computer_chime: 'sounds/computer_chime.ogg',
         beep_a: 'sounds/beep_a.ogg',
-        call: 'sounds/marching-band-dave-girtsman.mp3',
+        call: 'sounds/ringtone-42676.mp3',
         connecting: 'sounds/alien-bomb-timer.wav',
         busy: 'sounds/phone_busy.wav',
         attention: 'sounds/attention.wav'
