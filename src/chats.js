@@ -4821,12 +4821,15 @@ define("xabber-chats", function () {
 
                 if ($elem.hasClass('msg-hyperlink')) {
                     ev && ev.preventDefault();
+                    /*
                     $elem.blur();
                     let link = $elem.attr('href');
                     utils.dialogs.ask("", (`${xabber.getString("open_this_link")}\n\n<b class='link'>${decodeURI(link)}</b>`), null, {ok_button_text: xabber.getString("open")}).done((result) => {
                         if (result)
                             utils.openWindow(link);
                     });
+                    */
+                    utils.openWindow($elem.attr('href'));
                     return;
                 }
 
