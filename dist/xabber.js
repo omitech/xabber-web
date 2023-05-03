@@ -44852,10 +44852,11 @@ define("xabber-accounts", [],function () {
                         xabber.trigger('quit');
                         return;
                     }
+                    /*
                     if (!this.auth_view) {
-                        //utils.dialogs.error(xabber.getString("connection__error__text_token_invalidated", [this.get('jid')]));
-                        xabber.trigger('quit');
+                        utils.dialogs.error(xabber.getString("connection__error__text_token_invalidated", [this.get('jid')]));
                     }
+                    */
                     this.session.set({
                         on_token_revoked: true,
                         auth_failed: true,
@@ -44866,7 +44867,11 @@ define("xabber-accounts", [],function () {
                     this.connection.pass = "";
                     this.trigger('deactivate', this);
                     this.connFeedback(xabber.getString("connection__error__text_token_invalidated_short"));
-                    this.connect({token_invalidated: true});                    
+                    this.connect({token_invalidated: true});
+                    
+                    if (!this.auth_view) {
+                        xabber.trigger('quit');
+                    }
                 },
 
                 onChangedConnected: function () {
