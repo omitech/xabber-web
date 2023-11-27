@@ -57192,6 +57192,7 @@ define("xabber-chats", [],function () {
                     let $prev_selected = $msg.hasClass('selected') ? $msg.prevAll('.chat-message.selected').last() : $msg.prevAll('.chat-message.selected').first();
                     !$prev_selected.length && ($prev_selected = $msg.hasClass('selected') ? $msg.nextAll('.chat-message.selected').last() : $msg.nextAll('.chat-message.selected').first());
                     !$prev_selected.length && ($prev_selected = $msg.hasClass('selected') ? $msg.prevAll('.chat-message.selected').first() : $msg.prevAll('.chat-message.selected').last());
+                    
                     if ((xabber.shiftctrl_pressed || xabber.shift_pressed) && $prev_selected.length) {
                         let $all_msgs = [], is_selected = $msg.hasClass('selected');
                         if ($prev_selected.attr('data-time') < $msg.attr('data-time'))
@@ -57206,7 +57207,7 @@ define("xabber-chats", [],function () {
                         this.bottom.manageSelectedMessages();
                         return false;
                     }
-                    if (!no_select_message) {
+                    if ((!no_select_message && xabber.ctrl_pressed) || $prev_selected.length) {
                         $msg.switchClass('selected', !$msg.hasClass('selected'));
                         ev.preventDefault();
                         this.bottom.manageSelectedMessages();
@@ -62106,7 +62107,12 @@ define("xabber-ui", [],function () {
             } else if (ev.keyCode == constants.KEY_SHIFT) {
                 this.shift_pressed = true;
                 ev.preventDefault();
+            } else if (ev.keyCode == constants.KEY_CTRL) {
+                this.ctrl_pressed = true;
+                ev.preventDefault();
             }
+
+
             let attrs = xabber.body.screen.attributes;
             if (ev.keyCode === constants.KEY_ESCAPE) {
                 if (xabber.body.$el.siblings('#modals').children('.open').length)
@@ -62152,6 +62158,8 @@ define("xabber-ui", [],function () {
                 this.shift_pressed = true;
             if (!ev.shiftKey)
                 this.shift_pressed = null;
+            if (!ev.ctrlKey) 
+                this.ctrl_pressed = null;
         });
 
         this.updateLayout = function (options) {
