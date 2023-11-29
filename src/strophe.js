@@ -238,11 +238,14 @@ define("xabber-strophe", function () {
         Strophe.addNamespace('PUBSUB_AVATAR_DATA', 'urn:xmpp:avatar:data');
         Strophe.addNamespace('PUBSUB_AVATAR_METADATA', 'urn:xmpp:avatar:metadata');
         Strophe.addNamespace('REWRITE', 'https://xabber.com/protocol/rewrite');
-        Strophe.addNamespace('REFERENCE', 'https://xabber.com/protocol/reference');
+        //Strophe.addNamespace('REFERENCE', 'https://xabber.com/protocol/references');
         Strophe.addNamespace('MARKUP', 'https://xabber.com/protocol/markup');
-        Strophe.addNamespace('VOICE_MESSAGE', 'https://xabber.com/protocol/voice-message');
+        //Strophe.addNamespace('VOICE_MESSAGE', 'https://xabber.com/protocol/voice-messages');
         //Strophe.addNamespace('FILES', 'https://xabber.com/protocol/files');
-        Strophe.addNamespace('FILES', 'https://xabber.com/protocol/otb'); // match xaaber-android client
+        // match xabber-android client
+        Strophe.addNamespace('REFERENCE', 'https://xabber.com/protocol/reference');
+        Strophe.addNamespace('VOICE_MESSAGE', 'https://xabber.com/protocol/voice-message');
+        Strophe.addNamespace('FILES', 'https://xabber.com/protocol/otb'); 
         return xabber;
     };
 });
