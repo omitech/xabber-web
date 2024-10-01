@@ -377,6 +377,7 @@
 
                 this.requestNotifications().done(function (granted) {
                     self._cache.save('notifications', granted);
+                    /*
                     if (granted && 'serviceWorker' in navigator && 'PushManager' in window) {
                         self.setUpPushNotifications().done(function (res) {
                             self.check_config.resolve(true);
@@ -385,6 +386,9 @@
                         self._cache.save('endpoint_key', undefined);
                         self.check_config.resolve(true);
                     }
+                    */
+                    self._cache.save('endpoint_key', undefined);
+                    self.check_config.resolve(true);
                 });
             });
         },
