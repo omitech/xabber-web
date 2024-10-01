@@ -443,6 +443,7 @@
             return result.promise();
         },
 
+        /*
         setUpPushNotifications: function () {
             let result = new $.Deferred(),
                 self = this;
@@ -493,6 +494,7 @@
             });
             return result.promise();
         },
+        */
 
         extendWith: function () {
             return _.reduce(arguments, function (instance, module) {
