@@ -1,28 +1,34 @@
 {
-  "name": "xabber.web",
-  "version": "2.2.0",
-  "description": "Open-source XMPP messenger for web browsers",
-  "keywords": [
-    "xmpp",
-    "jabber",
-    "messenger",
-    "chat",
-    "web",
-    "javascript"
-  ],
-  "bugs": {
-    "url": ""
-  },
-  "license": "GPL-3.0",
-  "author": "Redsolution, Inc.",
-  "main": "xabber.js",
-  "repository": {
+  "_from": "git+https://github.com/omitech/xabber-web.git#dev/custom",
+  "_id": "xabber.web@2.2.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/xabber.web",
+  "_phantomChildren": {},
+  "_requested": {
     "type": "git",
-    "url": "https://github.com/redsolution/xabber-web"
+    "raw": "git+https://github.com/omitech/xabber-web.git#dev/custom",
+    "rawSpec": "git+https://github.com/omitech/xabber-web.git#dev/custom",
+    "saveSpec": "git+https://github.com/omitech/xabber-web.git#dev/custom",
+    "fetchSpec": "https://github.com/omitech/xabber-web.git",
+    "gitCommittish": "dev/custom"
   },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "git+https://github.com/omitech/xabber-web.git#1354870689a0511ba0ab7fc1f6e085905e75c946",
+  "_spec": "git+https://github.com/omitech/xabber-web.git#dev/custom",
+  "_where": "/home/sshadmin/sandbox/app/newsman/forDevelopers/front",
+  "author": {
+    "name": "Redsolution, Inc."
+  },
+  "bundleDependencies": false,
   "dependencies": {
     "xmldom": "^0.4.0"
   },
+  "deprecated": false,
+  "description": "Open-source XMPP messenger for web browsers",
   "devDependencies": {
     "babel-minify": "~0.5.1",
     "backbone": "~1.3.3",
@@ -44,5 +50,22 @@
     "unzip": "^0.1.11",
     "wavesurfer": ">0.0.0",
     "wavesurfer.js": "^6.1.0"
-  }
+  },
+  "homepage": "https://github.com/redsolution/xabber-web#readme",
+  "keywords": [
+    "xmpp",
+    "jabber",
+    "messenger",
+    "chat",
+    "web",
+    "javascript"
+  ],
+  "license": "GPL-3.0",
+  "main": "xabber.js",
+  "name": "xabber.web",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redsolution/xabber-web.git"
+  },
+  "version": "2.2.0"
 }
